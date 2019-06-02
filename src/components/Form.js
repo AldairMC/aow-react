@@ -1,18 +1,36 @@
 import  React, { Component } from 'react';
 
 class Form extends Component {
+
+    //Crear los ref
+    cityRef = React.createRef();
+    countryRef = React.createRef();
+
+    obtenerWeather = (event) => {
+        event.preventDefault();
+
+        //obtener datos con los ref
+        const datos = {
+            city: this.cityRef.current.value,
+            country: this.countryRef.current.value,
+            
+        }
+        
+        this.props.obtenerWeather(datos)
+    }
+
     render() {
         return (
             <div className="contenedor-form">
                 <div className="container">
                     <div className="row">
-                        <form>
+                        <form onSubmit={this.obtenerWeather}>
                             <div className="input-field col s12 m8 l4 offset-m2">
-                                <input id="city" type="text"/>
+                                <input id="city" ref={this.cityRef} type="text"/>
                                 <label htmlFor="city"> City </label>
                             </div>
                             <div className="input-field col s12 m8 l4 offset-m2">
-                                <select id="country">
+                                <select id="country" ref={this.countryRef}>
                                     <option value="" defaultValue>Elige un país</option>
                                     <option value="AR">Argentina</option>
                                     <option value="BR">Brazil</option>
