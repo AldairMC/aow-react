@@ -6,7 +6,7 @@ class Form extends Component {
     cityRef = React.createRef();
     countryRef = React.createRef();
 
-    obtenerWeather = (event) => {
+    enviarWeather = (event) => {
         event.preventDefault();
 
         //obtener datos con los ref
@@ -17,6 +17,9 @@ class Form extends Component {
         }
         
         this.props.obtenerWeather(datos)
+
+        //Reiniciando el form
+        event.currentTarget.reset();
     }
 
     render() {
@@ -24,7 +27,7 @@ class Form extends Component {
             <div className="contenedor-form">
                 <div className="container">
                     <div className="row">
-                        <form onSubmit={this.obtenerWeather}>
+                        <form onSubmit={this.enviarWeather}>
                             <div className="input-field col s12 m8 l4 offset-m2">
                                 <input id="city" ref={this.cityRef} type="text"/>
                                 <label htmlFor="city"> City </label>
