@@ -2,23 +2,27 @@ import React, { Component } from 'react';
 import Header from './components/Header';
 import Form from './components/Form';
 import Error from './components/Error';
+import Clima from './components/DatosClima';
 
 
 class App extends Component{
   
   state = {
-    error: ''
+    error: '',
+    consulta: {},
+    datosConsulta: {}
   }
 
-  componentDidUpdate(){
-    this.consultaApi();
+  componentDidUpdate(prevProps, prevState){
+    //Para llamar a la funcion una sola vez
+    if(prevState.consulta !== this.state.consulta){
+      this.consultaApi();
+    }
   }
 
   componentDidMount(){
     this.setState({
-      error: false,
-      consulta: {},
-      datosConsulta: {}
+      error: false
     });
   }
 
@@ -45,7 +49,6 @@ class App extends Component{
       .catch(error => {
         console.log(error)
       })
-    
    }
 
 
@@ -58,7 +61,8 @@ class App extends Component{
       });
     }else{
       this.setState({
-        consulta: datos
+        consulta: datos, 
+        error: false
       });
     }
   }
@@ -74,6 +78,11 @@ class App extends Component{
         <Error 
           mensaje= "Todos los campos son requeridos"
         />
+    }else{
+      resultado = 
+      <Clima 
+        datosClima={this.state.datosConsulta}
+      />
     }
 
     return(
